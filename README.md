@@ -1,6 +1,6 @@
-# docker remote database development
+# Docker Nginx + WordPress + Remote Google Cloud SQL Database development environment
 
-## docker wordpress environment connect to demo3 remote DB
+## docker wordpress environment connect to remote DB on google cloud
 
 ## Getting Started
 
