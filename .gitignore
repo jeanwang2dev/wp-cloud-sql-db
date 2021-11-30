@@ -1,0 +1,7 @@
+.env
+wordpress/
+.vscode
+app/
+certs/
+logs/
+credentials.json

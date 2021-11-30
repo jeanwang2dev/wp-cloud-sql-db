@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+
+  # WORDPRESS
+  wp:
+    build: 
+      context: ./bin/wp  
+    image: ${APP_NAME}_wp:1.0
+    container_name: ${APP_NAME}_wp
+    restart: unless-stopped
+    ports:
+      - '9000:9000'
+    env_file: .env
+    extra_hosts:
+      - "www.${DOMAIN}:172.18.0.4"
+      - "${DOMAIN}:172.18.0.4"
+    environment:
+      WORDPRESS_DB_HOST: ${MYSQL_DBHOST}
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+      WORDPRESS_TABLE_PREFIX: wp_
+      WORDPRESS_DEBUG: 1      
+    volumes:
+      - ./wordpress/:/var/www/html
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./credentials.json:/config/credentials.json
+    networks:
+      - edu_nt   
+
+  # NGINX
+  nginx:
+    depends_on:
+      - wp
+    image: nginx:1.10.3
+    container_name: ${APP_NAME}_nginx
+    restart: unless-stopped
+    volumes:  
+      - ./nginx:/etc/nginx/conf.d
+      - ./certs:/etc/certs
+      - ./logs/nginx:/var/log/nginx
+      - ./wordpress:/var/www/html
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - edu_nt      
+
+  # MAILHOG
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: ${APP_NAME}_mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"    
+    networks:
+      - edu_nt  
+
+networks:
+  edu_nt:
+    driver: bridge  
