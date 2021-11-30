@@ -1,6 +1,6 @@
 # Docker Nginx + WordPress + Remote Google Cloud SQL Database development environment
 
-## docker wordpress environment connect to remote DB on google cloud
+## Custom build docker image for wordpress and google cloud sql proxy, running in the same container
 
 ## Getting Started
 
@@ -25,7 +25,8 @@ cd ../
 
 ```
 
-### Add variables to env then
+### Add variables to env and created credentials.json file from a service account that has the appropriate role to gcs 
+#### Refer to info on [GCP Doc Page](https://cloud.google.com/sql/docs/sqlserver/connect-docker).
 
 ```
 docker-compose build
