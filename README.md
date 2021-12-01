@@ -55,3 +55,12 @@ else {
 ```
 sudo chown -R www-data:www-data wp-content/
 ```
+### Modify wp extra host IP address by inspect the nginx container 
+
+```
+docker container inspect nginx_container
+...
+extra_hosts:
+      - "www.${DOMAIN}:172.18.0.4"
+      - "${DOMAIN}:172.18.0.4"
+```
