@@ -55,7 +55,7 @@ else {
 ```
 sudo chown -R www-data:www-data wp-content/
 ```
-### Modify wp extra host IP address by inspect the nginx container 
+### Modify wp extra host IP address by inspect the nginx container then run *docker-compose up -d* again
 
 ```
 docker container inspect nginx_container
